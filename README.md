@@ -20,6 +20,34 @@
 - [CODE OF CONDUCT](./CODE_OF_CONDUCT.md)
 - [LICENSE](./LICENSE)
 
+## Disclaimer
+
+OpenList is an open-source project independently maintained by the OpenList Team, following the AGPL-3.0 license and committed to maintaining complete code openness and modification transparency.
+
+We have noticed the emergence of some third-party projects in the community with names similar to this project, such as OpenListApp/OpenListApp, as well as some paid proprietary software using the same or similar naming. To avoid user confusion, we hereby declare:
+
+- OpenList has no official association with any third-party derivative projects.
+
+- All software, code, and services of this project are maintained by the OpenList Team and are freely available on GitHub.
+
+- Project documentation and API services primarily rely on charitable resources provided by Cloudflare. There are currently no paid plans or commercial deployments, and the use of existing features does not involve any costs.
+
+We respect the community's rights to free use and derivative development, but we also strongly urge downstream projects:
+
+- Should not use the "OpenList" name for impersonation promotion or commercial gain;
+
+- Must not distribute OpenList-based code in a closed-source manner or violate AGPL license terms.
+
+To better maintain healthy ecosystem development, we recommend:
+
+- Clearly indicate the project source and choose appropriate open-source licenses in accordance with the open-source spirit;
+
+- If involving commercial use, please avoid using "OpenList" or any confusing naming as the project name;
+
+- If you need to use materials located under OpenListTeam/Logo, you may modify and use them under compliance with the agreement.
+
+Thank you for your support and understanding of the OpenList project.
+
 ## Features
 
 - [x] Multiple storages
@@ -36,7 +64,9 @@
   - [x] [UPYUN Storage Service](https://www.upyun.com/products/file-storage)
   - [x] [WebDAV](https://en.wikipedia.org/wiki/WebDAV)
   - [x] Teambition([China](https://www.teambition.com), [International](https://us.teambition.com))
+  - [x] [MediaFire](https://www.mediafire.com)
   - [x] [Mediatrack](https://www.mediatrack.cn)
+  - [x] [ProtonDrive](https://proton.me/drive)
   - [x] [139yun](https://yun.139.com) (Personal, Family, Group)
   - [x] [YandexDisk](https://disk.yandex.com)
   - [x] [BaiduNetdisk](http://pan.baidu.com)
@@ -46,7 +76,6 @@
   - [x] [Thunder](https://pan.xunlei.com)
   - [x] [Lanzou](https://www.lanzou.com)
   - [x] [ILanzou](https://www.ilanzou.com)
-  - [x] [Aliyundrive share](https://www.alipan.com)
   - [x] [Google photo](https://photos.google.com)
   - [x] [Mega.nz](https://mega.nz)
   - [x] [Baidu photo](https://photo.baidu.com)
@@ -57,6 +86,15 @@
   - [x] [FeijiPan](https://www.feijipan.com)
   - [x] [dogecloud](https://www.dogecloud.com/product/oss)
   - [x] [Azure Blob Storage](https://azure.microsoft.com/products/storage/blobs)
+  - [x] [Chaoxing](https://www.chaoxing.com)
+  - [x] [CNB](https://cnb.cool/)
+  - [x] [Degoo](https://degoo.com)
+  - [x] [Doubao](https://www.doubao.com)
+  - [x] [Febbox](https://www.febbox.com)
+  - [x] [GitHub](https://github.com)
+  - [x] [OpenList](https://github.com/OpenListTeam/OpenList)
+  - [x] [Teldrive](https://github.com/tgdrive/teldrive)
+  - [x] [Weiyun](https://www.weiyun.com)
 - [x] Easy to deploy and out-of-the-box
 - [x] File preview (PDF, markdown, code, plain text, ...)
 - [x] Image preview in gallery mode
@@ -78,8 +116,9 @@
 
 ## Document
 
-- 📘 [Docs & Install Guide](https://docs.oplist.org)
-- 📚 [Backup Docs Site](https://docs.openlist.team)
+- 📘 [Global Site](https://doc.oplist.org)
+- 📚 [Backup Site](https://doc.openlist.team)
+- 🌏 [CN Site](https://doc.oplist.org.cn)
 
 ## Demo
 
@@ -88,6 +127,10 @@ N/A (to be rebuilt)
 ## Discussion
 
 Please refer to [*Discussions*](https://github.com/OpenListTeam/OpenList/discussions) for raising general questions, ***Issues* is for bug reports and feature requests only.**
+
+## Sponsor
+
+[![VPS.Town](https://vps.town/static/images/sponsor.png)](https://vps.town "VPS.Town - Trust, Effortlessly. Your Cloud, Reimagined.")
 
 ## License
 

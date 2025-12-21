@@ -2,14 +2,17 @@ package tool
 
 import (
 	"fmt"
+	"path"
 	"time"
 
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/errs"
+	"github.com/OpenListTeam/OpenList/v4/internal/fs"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
 	"github.com/OpenListTeam/OpenList/v4/internal/op"
 	"github.com/OpenListTeam/OpenList/v4/internal/setting"
 	"github.com/OpenListTeam/OpenList/v4/internal/task"
+	"github.com/OpenListTeam/OpenList/v4/internal/task_group"
 	"github.com/OpenListTeam/tache"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -30,9 +33,6 @@ type DownloadTask struct {
 }
 
 func (t *DownloadTask) Run() error {
-	if err := t.ReinitCtx(); err != nil {
-		return err
-	}
 	t.ClearEndTime()
 	t.SetStartTime(time.Now())
 	defer func() { t.SetEndTime(time.Now()) }()
@@ -94,6 +94,9 @@ outer:
 	if t.tool.Name() == "ThunderBrowser" {
 		return nil
 	}
+	if t.tool.Name() == "ThunderX" {
+		return nil
+	}
 	if t.tool.Name() == "115 Cloud" {
 		// hack for 115
 		<-time.After(time.Second * 1)
@@ -101,6 +104,12 @@ outer:
 		if err != nil {
 			log.Errorln(err.Error())
 		}
+		return nil
+	}
+	if t.tool.Name() == "115 Open" {
+		return nil
+	}
+	if t.tool.Name() == "123 Open" {
 		return nil
 	}
 	t.Status = "offline download completed, maybe transferring"
@@ -166,7 +175,7 @@ func (t *DownloadTask) Update() (bool, error) {
 
 func (t *DownloadTask) Transfer() error {
 	toolName := t.tool.Name()
-	if toolName == "115 Cloud" || toolName == "PikPak" || toolName == "Thunder" || toolName == "ThunderBrowser" {
+	if toolName == "115 Cloud" || toolName == "115 Open" || toolName == "123 Open" || toolName == "PikPak" || toolName == "Thunder" || toolName == "ThunderX" || toolName == "ThunderBrowser" {
 		// 如果不是直接下载到目标路径，则进行转存
 		if t.TempDir != t.DstDirPath {
 			return transferObj(t.Ctx(), t.TempDir, t.DstDirPath, t.DeletePolicy)
@@ -178,20 +187,25 @@ func (t *DownloadTask) Transfer() error {
 		if err != nil {
 			return errors.WithMessage(err, "failed get dst storage")
 		}
-		taskCreator, _ := t.Ctx().Value("user").(*model.User)
-		task := &TransferTask{
-			TaskExtension: task.TaskExtension{
-				Creator: taskCreator,
+		taskCreator, _ := t.Ctx().Value(conf.UserKey).(*model.User)
+		tsk := &TransferTask{
+			TaskData: fs.TaskData{
+				TaskExtension: task.TaskExtension{
+					Creator: taskCreator,
+					ApiUrl:  t.ApiUrl,
+				},
+				SrcActualPath: t.TempDir,
+				DstActualPath: dstDirActualPath,
+				DstStorage:    dstStorage,
+				DstStorageMp:  dstStorage.GetStorage().MountPath,
 			},
-			SrcObjPath:   t.TempDir,
-			DstDirPath:   dstDirActualPath,
-			DstStorage:   dstStorage,
-			DstStorageMp: dstStorage.GetStorage().MountPath,
 			DeletePolicy: t.DeletePolicy,
 			Url:          t.Url,
 		}
-		task.SetTotalBytes(t.GetTotalBytes())
-		TransferTaskManager.Add(task)
+		tsk.SetTotalBytes(t.GetTotalBytes())
+		tsk.groupID = path.Join(tsk.DstStorageMp, tsk.DstActualPath)
+		task_group.TransferCoordinator.AddTask(tsk.groupID, nil)
+		TransferTaskManager.Add(tsk)
 		return nil
 	}
 	return transferStd(t.Ctx(), t.TempDir, t.DstDirPath, t.DeletePolicy)

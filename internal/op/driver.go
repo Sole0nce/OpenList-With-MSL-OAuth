@@ -80,8 +80,23 @@ func getMainItems(config driver.Config) []driver.Item {
 			Required: true,
 			Help:     "The cache expiration time for this storage",
 		})
+		items = append(items, driver.Item{
+			Name:     "custom_cache_policies",
+			Type:     conf.TypeText,
+			Default:  "",
+			Required: false,
+			Help:     "The cache expiration rules for this storage",
+		})
 	}
-	if !config.OnlyProxy && !config.OnlyLocal {
+	if config.MustProxy() {
+		items = append(items, driver.Item{
+			Name:     "webdav_policy",
+			Type:     conf.TypeSelect,
+			Default:  "native_proxy",
+			Options:  "use_proxy_url,native_proxy",
+			Required: true,
+		})
+	} else {
 		items = append(items, []driver.Item{{
 			Name: "web_proxy",
 			Type: conf.TypeBool,
@@ -104,18 +119,16 @@ func getMainItems(config driver.Config) []driver.Item {
 			}
 			items = append(items, item)
 		}
-	} else {
-		items = append(items, driver.Item{
-			Name:     "webdav_policy",
-			Type:     conf.TypeSelect,
-			Default:  "native_proxy",
-			Options:  "use_proxy_url,native_proxy",
-			Required: true,
-		})
 	}
 	items = append(items, driver.Item{
 		Name: "down_proxy_url",
 		Type: conf.TypeText,
+	})
+	items = append(items, driver.Item{
+		Name:    "disable_proxy_sign",
+		Type:    conf.TypeBool,
+		Default: "false",
+		Help:    "Disable sign for Download proxy URL",
 	})
 	if config.LocalSort {
 		items = append(items, []driver.Item{{

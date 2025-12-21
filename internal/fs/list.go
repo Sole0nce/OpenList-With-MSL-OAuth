@@ -3,6 +3,7 @@ package fs
 import (
 	"context"
 
+	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
 	"github.com/OpenListTeam/OpenList/v4/internal/op"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
@@ -12,9 +13,9 @@ import (
 
 // List files
 func list(ctx context.Context, path string, args *ListArgs) ([]model.Obj, error) {
-	meta, _ := ctx.Value("meta").(*model.Meta)
-	user, _ := ctx.Value("user").(*model.User)
-	virtualFiles := op.GetStorageVirtualFilesByPath(path)
+	meta, _ := ctx.Value(conf.MetaKey).(*model.Meta)
+	user, _ := ctx.Value(conf.UserKey).(*model.User)
+	virtualFiles := op.GetStorageVirtualFilesWithDetailsByPath(ctx, path, !args.WithStorageDetails, args.Refresh)
 	storage, actualPath, err := op.GetStorageAndActualPath(path)
 	if err != nil && len(virtualFiles) == 0 {
 		return nil, errors.WithMessage(err, "failed get storage")
@@ -23,8 +24,9 @@ func list(ctx context.Context, path string, args *ListArgs) ([]model.Obj, error)
 	var _objs []model.Obj
 	if storage != nil {
 		_objs, err = op.List(ctx, storage, actualPath, model.ListArgs{
-			ReqPath: path,
-			Refresh: args.Refresh,
+			ReqPath:            path,
+			Refresh:            args.Refresh,
+			WithStorageDetails: args.WithStorageDetails,
 		})
 		if err != nil {
 			if !args.NoLog {

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	sdk "github.com/OpenListTeam/115-sdk-go"
 	"github.com/OpenListTeam/OpenList/v4/cmd/flags"
 	"github.com/OpenListTeam/OpenList/v4/drivers/base"
 	"github.com/OpenListTeam/OpenList/v4/internal/driver"
@@ -16,7 +17,6 @@ import (
 	"github.com/OpenListTeam/OpenList/v4/internal/stream"
 	"github.com/OpenListTeam/OpenList/v4/pkg/http_range"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
-	sdk "github.com/OpenListTeam/115-sdk-go"
 	"golang.org/x/time/rate"
 )
 
@@ -53,6 +53,12 @@ func (d *Open115) Init(ctx context.Context) error {
 	if d.Addition.LimitRate > 0 {
 		d.limiter = rate.NewLimiter(rate.Limit(d.Addition.LimitRate), 1)
 	}
+	if d.PageSize <= 0 {
+		d.PageSize = 200
+	} else if d.PageSize > 1150 {
+		d.PageSize = 1150
+	}
+
 	return nil
 }
 
@@ -69,7 +75,7 @@ func (d *Open115) Drop(ctx context.Context) error {
 
 func (d *Open115) List(ctx context.Context, dir model.Obj, args model.ListArgs) ([]model.Obj, error) {
 	var res []model.Obj
-	pageSize := int64(200)
+	pageSize := int64(d.PageSize)
 	offset := int64(0)
 	for {
 		if err := d.WaitLimit(ctx); err != nil {
@@ -222,7 +228,7 @@ func (d *Open115) Put(ctx context.Context, dstDir model.Obj, file model.FileStre
 	}
 	sha1 := file.GetHash().GetHash(utils.SHA1)
 	if len(sha1) != utils.SHA1.Width {
-		_, sha1, err = stream.CacheFullInTempFileAndHash(file, utils.SHA1)
+		_, sha1, err = stream.CacheFullAndHash(file, &up, utils.SHA1)
 		if err != nil {
 			return err
 		}
@@ -252,6 +258,7 @@ func (d *Open115) Put(ctx context.Context, dstDir model.Obj, file model.FileStre
 		return err
 	}
 	if resp.Status == 2 {
+		up(100)
 		return nil
 	}
 	// 2. two way verify
@@ -286,6 +293,7 @@ func (d *Open115) Put(ctx context.Context, dstDir model.Obj, file model.FileStre
 			return err
 		}
 		if resp.Status == 2 {
+			up(100)
 			return nil
 		}
 	}
@@ -300,6 +308,43 @@ func (d *Open115) Put(ctx context.Context, dstDir model.Obj, file model.FileStre
 		return err
 	}
 	return nil
+}
+
+func (d *Open115) OfflineDownload(ctx context.Context, uris []string, dstDir model.Obj) ([]string, error) {
+	return d.client.AddOfflineTaskURIs(ctx, uris, dstDir.GetID())
+}
+
+func (d *Open115) DeleteOfflineTask(ctx context.Context, infoHash string, deleteFiles bool) error {
+	return d.client.DeleteOfflineTask(ctx, infoHash, deleteFiles)
+}
+
+func (d *Open115) OfflineList(ctx context.Context) (*sdk.OfflineTaskListResp, error) {
+	resp, err := d.client.OfflineTaskList(ctx, 1)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *Open115) GetDetails(ctx context.Context) (*model.StorageDetails, error) {
+	userInfo, err := d.client.UserInfo(ctx)
+	if err != nil {
+		return nil, err
+	}
+	total, err := userInfo.RtSpaceInfo.AllTotal.Size.Int64()
+	if err != nil {
+		return nil, err
+	}
+	free, err := userInfo.RtSpaceInfo.AllRemain.Size.Int64()
+	if err != nil {
+		return nil, err
+	}
+	return &model.StorageDetails{
+		DiskUsage: model.DiskUsage{
+			TotalSpace: uint64(total),
+			FreeSpace:  uint64(free),
+		},
+	}, nil
 }
 
 // func (d *Open115) GetArchiveMeta(ctx context.Context, obj model.Obj, args model.ArchiveArgs) (model.ArchiveMeta, error) {

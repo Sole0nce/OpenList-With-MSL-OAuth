@@ -13,7 +13,7 @@ body:
     attributes:
       label: Please confirm the following
       description: |
-        You must check all the following, otherwise your issue may be closed directly.
+        You must confirm, agree, and check all the following, otherwise your issue will definitely be closed directly.
         Or you can go to the [discussions](https://github.com/OpenListTeam/OpenList/discussions).
       options:
         - label: |
@@ -25,11 +25,11 @@ body:
         - label: |
             I confirm my description is clear, polite, helps developers quickly locate the issue, and complies with community rules.
         - label: |
-            I have read the [OpenList documentation](https://docs.oplist.org).
+            I have read the [OpenList documentation](https://doc.oplist.org).
         - label: |
             I confirm there are no duplicate issues or discussions.
         - label: |
-            I confirm this is an `OpenList` issue, not caused by other reasons (such as [network](https://docs.oplist.org/faq/howto.html#tls-handshake-timeout-read-connection-reset-by-peer-dns-lookup-failed-connect-connection-refused-client-timeout-exceeded-while-awaiting-headers-no-such-host), dependencies, or operation).
+            I confirm this is an `OpenList` issue, not caused by other reasons (such as [network](https://doc.oplist.org/faq/howto#tls-handshake-timeout-read-connection-reset-by-peer-dns-lookup-failed-connect-connection-refused-client-timeout-exceeded-while-awaiting-headers-no-such-host-1), dependencies, or operation).
         - label: |
             I believe this issue must be handled by `OpenList` and not by a third party.
         - label: |
@@ -60,6 +60,14 @@ body:
     validations:
       required: true
   - type: textarea
+    id: logs
+    attributes:
+      label: Logs (required)
+      description: |
+        Please copy and paste any relevant log output or screenshots. (You may mask sensitive fields) [Guide](https://doc.oplist.org/faq/howto#how-to-quickly-locate-bugs)
+    validations:
+      required: true
+  - type: textarea
     id: config
     attributes:
       label: Configuration File Content (required)
@@ -67,12 +75,6 @@ body:
         Please provide your `OpenList` application's configuration file and a screenshot of the relevant storage configuration. (You may mask sensitive fields)
     validations:
       required: true
-  - type: textarea
-    id: logs
-    attributes:
-      label: Logs (optional)
-      description: |
-        Please copy and paste any relevant log output or screenshots. (You may mask sensitive fields)
   - type: textarea
     id: reproduction
     attributes:

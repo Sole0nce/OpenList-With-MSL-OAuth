@@ -33,8 +33,9 @@ type Addition struct {
 var config = driver.Config{
 	Name:        "FTP",
 	LocalSort:   true,
-	OnlyLocal:   true,
+	OnlyProxy:   true,
 	DefaultRoot: "/",
+	NoLinkURL:   true,
 }
 
 func init() {

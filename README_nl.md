@@ -20,6 +20,34 @@
 - [Gedragscode](./CODE_OF_CONDUCT.md)
 - [Licentie](./LICENSE)
 
+## Disclaimer
+
+OpenList is een open-source project dat onafhankelijk wordt onderhouden door het OpenList Team, volgend op de AGPL-3.0 licentie en toegewijd aan het behouden van volledige code openheid en transparantie van wijzigingen.
+
+We hebben gemerkt dat er in de gemeenschap enkele derde partij projecten zijn verschenen met namen vergelijkbaar met dit project, zoals OpenListApp/OpenListApp, evenals enkele betaalde eigendomssoftware die dezelfde of soortgelijke naamgeving gebruikt. Om verwarring bij gebruikers te voorkomen, verklaren we hierbij:
+
+- OpenList heeft geen officiële associatie met enige derde partij afgeleide projecten.
+
+- Alle software, code en diensten van dit project worden onderhouden door het OpenList Team en zijn gratis beschikbaar op GitHub.
+
+- Projectdocumentatie en API diensten zijn voornamelijk afhankelijk van liefdadigheidsbronnen verstrekt door Cloudflare. Er zijn momenteel geen betaalplannen of commerciële implementaties, en het gebruik van bestaande functies brengt geen kosten met zich mee.
+
+We respecteren de rechten van de gemeenschap voor vrij gebruik en afgeleide ontwikkeling, maar we roepen downstream projecten ook ten zeerste op:
+
+- Mogen niet de "OpenList" naam gebruiken voor namaakpromotie of commercieel gewin;
+
+- Mogen OpenList-gebaseerde code niet distribueren op een closed-source manier of AGPL licentievoorwaarden schenden.
+
+Om een gezonde ecosysteemontwikkeling beter te onderhouden, bevelen we aan:
+
+- Duidelijk de projectbron aangeven en passende open-source licenties kiezen in overeenstemming met de open-source geest;
+
+- Bij commercieel gebruik, vermijd het gebruik van "OpenList" of enige verwarrende naamgeving als projectnaam;
+
+- Als u materialen onder OpenListTeam/Logo moet gebruiken, kunt u deze wijzigen en gebruiken onder naleving van de overeenkomst.
+
+Dank u voor uw ondersteuning en begrip
+
 ## Functies
 
 - [x] Meerdere opslagmogelijkheden
@@ -36,7 +64,9 @@
   - [x] [UPYUN Storage Service](https://www.upyun.com/products/file-storage)
   - [x] [WebDAV](https://en.wikipedia.org/wiki/WebDAV)
   - [x] Teambition([China](https://www.teambition.com), [Internationaal](https://us.teambition.com))
+  - [x] [MediaFire](https://www.mediafire.com)
   - [x] [Mediatrack](https://www.mediatrack.cn)
+  - [x] [ProtonDrive](https://proton.me/drive)
   - [x] [139yun](https://yun.139.com) (Persoonlijk, Familie, Groep)
   - [x] [YandexDisk](https://disk.yandex.com)
   - [x] [BaiduNetdisk](http://pan.baidu.com)
@@ -46,7 +76,6 @@
   - [x] [Thunder](https://pan.xunlei.com)
   - [x] [Lanzou](https://www.lanzou.com)
   - [x] [ILanzou](https://www.ilanzou.com)
-  - [x] [Aliyundrive share](https://www.alipan.com)
   - [x] [Google photo](https://photos.google.com)
   - [x] [Mega.nz](https://mega.nz)
   - [x] [Baidu photo](https://photo.baidu.com)
@@ -57,6 +86,15 @@
   - [x] [FeijiPan](https://www.feijipan.com)
   - [x] [dogecloud](https://www.dogecloud.com/product/oss)
   - [x] [Azure Blob Storage](https://azure.microsoft.com/products/storage/blobs)
+  - [x] [Chaoxing](https://www.chaoxing.com)
+  - [x] [CNB](https://cnb.cool/)
+  - [x] [Degoo](https://degoo.com)
+  - [x] [Doubao](https://www.doubao.com)
+  - [x] [Febbox](https://www.febbox.com)
+  - [x] [GitHub](https://github.com)
+  - [x] [OpenList](https://github.com/OpenListTeam/OpenList)
+  - [x] [Teldrive](https://github.com/tgdrive/teldrive)
+  - [x] [Weiyun](https://www.weiyun.com)
 - [x] Eenvoudig te implementeren en direct te gebruiken
 - [x] Bestandsvoorbeeld (PDF, markdown, code, platte tekst, ...)
 - [x] Afbeeldingsvoorbeeld in galerijweergave
@@ -78,8 +116,9 @@
 
 ## Documentatie
 
-- 📘 [Documentatie & Installatiegids](https://docs.oplist.org)
-- 📚 [Back-up documentatiesite](https://docs.openlist.team)
+- 📘 [Global Site](https://doc.oplist.org)
+- 📚 [Backup Site](https://doc.openlist.team)
+- 🌏 [CN Site](https://doc.oplist.org.cn)
 
 ## Demo
 
@@ -88,6 +127,10 @@ N.v.t. (wordt opnieuw opgebouwd)
 ## Discussie
 
 Stel algemene vragen in [*Discussions*](https://github.com/OpenListTeam/OpenList/discussions), ***Issues* zijn alleen voor bugmeldingen en feature requests.**
+
+## Sponsoren
+
+[![VPS.Town](https://vps.town/static/images/sponsor.png)](https://vps.town "VPS.Town - Trust, Effortlessly. Your Cloud, Reimagined.")
 
 ## Licentie
 
