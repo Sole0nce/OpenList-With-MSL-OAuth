@@ -261,11 +261,13 @@ func OIDCLoginCallback(c *gin.Context) {
 			user, err = autoRegister(userID, userID, err)
 			if err != nil {
 				common.ErrorResp(c, err, 400)
+				return
 			}
 		}
 		token, err := common.GenerateToken(user)
 		if err != nil {
 			common.ErrorResp(c, err, 400)
+			return
 		}
 		if useCompatibility {
 			c.Redirect(302, common.GetApiUrl(c)+"/@login?token="+token)
@@ -439,6 +441,7 @@ func SSOLoginCallback(c *gin.Context) {
 	token, err := common.GenerateToken(user)
 	if err != nil {
 		common.ErrorResp(c, err, 400)
+		return
 	}
 	if usecompatibility {
 		c.Redirect(302, common.GetApiUrl(c)+"/@login?token="+token)
