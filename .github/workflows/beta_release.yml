@@ -43,6 +43,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          if [ $(wc -m < CHANGELOG.md) -gt 120000 ]; then
+            echo "⚠️ CHANGELOG 文本过长，正在执行截断..."
+            # 截取前 110000 个字符，并追加提示信息
+            head -c 110000 CHANGELOG.md > CHANGELOG.md.tmp
+            echo -e "\n\n... (由于 GitHub 限制，此处省略了过长的历史日志，请前往 Commit 历史查看) ..." >> CHANGELOG.md.tmp
+            mv CHANGELOG.md.tmp CHANGELOG.md
+          fi
           if ! gh release view beta; then
             gh release create beta --prerelease --notes-file CHANGELOG.md
           else
